@@ -11,7 +11,7 @@ const port = 8000;
 app.listen(port, () => console.log(`listening on ${port}`));
 
 app.use(function validateBearerToken(req, res, next) {
-  const bearerToken = req.get("Auth");
+  const bearerToken = req.get("Authorization");
   const apiKey = process.env.API_TOKEN;
 
   if (!bearerToken || bearerToken.split(" ")[1] !== apiKey) {
@@ -35,29 +35,3 @@ app.get("/movie", (req, res) => {
   });
   res.send(movieList);
 });
-
-function handleGenre(req, res, next) {
-  const genre = req.query.genre;
-  const moviesList = movies.filter((movie) => {
-    return movie.genre === genre;
-  });
-  return moviesList;
-}
-
-function handleAvg_vote(req, res, next) {
-  console.log("here");
-  const avg_vote = req.query.avg_vote;
-  const moviesList = movies.filter((movie) => {
-    return movie.avg_vote == avg_vote;
-  });
-  return moviesList;
-}
-
-function handleCountry(req, res, next) {
-  console.log("here");
-  const country = req.query.country;
-  const moviesList = movies.filter((movie) => {
-    return movie.country == country;
-  });
-  return moviesList;
-}
